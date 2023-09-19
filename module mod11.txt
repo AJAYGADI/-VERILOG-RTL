@@ -1,0 +1,17 @@
+module mod11(clk,rst,data_in,load,count);
+input clk,rst,load;
+input [3:0]data_in;
+output [3:0]count;
+
+always@(posedge clk)
+begin
+if(rst)
+count<=4'b0;
+else if(count>=4'd10)
+count<=4'b0;
+else if(load==1&&data_in<=10)
+count<=data_in;
+else
+count<=count -1'b1;
+end
+endmodule
