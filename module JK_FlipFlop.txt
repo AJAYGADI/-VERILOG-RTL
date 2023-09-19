@@ -1,0 +1,30 @@
+module JK_FlipFlop (
+    input wire J,   // Input J
+    input wire K,   // Input K
+    input wire CLK, // Clock input (active high)
+    output wire Q,  // Output Q
+    output wire Qbar // Output Qbar
+);
+
+reg Q_next, Qbar_next;
+
+always @(posedge CLK) begin
+    if (J && K) begin
+        Q_next <= Q;     // Toggle: Q remains unchanged
+        Qbar_next <= ~Q; // Complement of Q
+    end else if (J) begin
+        Q_next <= 1'b1;  // Set: Q is set to 1
+        Qbar_next <= 1'b0; // Complement of Q
+    end else if (K) begin
+        Q_next <= 1'b0;  // Reset: Q is reset to 0
+        Qbar_next <= 1'b1; // Complement of Q
+    end else begin
+        Q_next <= Q;     // Hold: Q remains unchanged
+        Qbar_next <= ~Q; // Complement of Q
+    end
+end
+
+assign Q = Q_next;
+assign Qbar = Qbar_next;
+
+endmodule
