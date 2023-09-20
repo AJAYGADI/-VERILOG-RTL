@@ -1,0 +1,22 @@
+// Buffer Register (buf_reg.v)
+module buf_reg (
+    input wire clk,       // Clock input
+    input wire reset,     // Reset input
+    input wire enable,    // Enable input
+    input wire data_in,   // Data input
+    output wire data_out  // Data output
+);
+
+    reg reg_data;  // Internal register to store data
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            reg_data <= 1'b0;  // Reset the register to 0
+        end else if (enable) begin
+            reg_data <= data_in;  // Store data when enable is active
+        end
+    end
+
+    assign data_out = reg_data;  // Output is the stored data
+
+endmodule
