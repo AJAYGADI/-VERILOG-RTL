@@ -1,0 +1,24 @@
+module siso_shift_register (
+    input wire clk,       // Clock input
+    input wire reset,     // Reset input
+    input wire shift_left, // Shift left control input
+    input wire shift_right,// Shift right control input
+    input wire data_in,   // Serial data input
+    output wire data_out  // Serial data output
+);
+
+    reg [3:0] register; // 4-bit shift register
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            register <= 4'b0000; // Reset the register to all zeros
+        end else if (shift_left) begin
+            register <= {register[2:0], data_in}; // Shift data left
+        end else if (shift_right) begin
+            register <= {data_in, register[3:1]}; // Shift data right
+        end
+    end
+
+    assign data_out = register[0]; // Serial data output from LSB
+
+endmodule
