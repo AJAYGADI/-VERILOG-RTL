@@ -1,0 +1,17 @@
+module sr_flipflop (
+  input S, // Set input
+  input R, // Reset input
+  input clk, // Clock input
+  output Q // Output
+);
+
+  reg Q; // Flip-flop output
+  
+  always @(posedge clk) begin
+    if (R)        // Reset takes precedence
+      Q <= 1'b0;
+    else if (S)   // Set
+      Q <= 1'b1;
+  end
+
+endmodule
