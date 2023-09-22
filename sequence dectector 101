@@ -1,0 +1,45 @@
+module moore(clk,rst,data_in,data_out);
+input clk,rst,data_in;
+output data_out;
+parameter IDLE=2'b00,
+ s1=2'b01,
+ s2=2'b10,
+ s3=2'b11;
+reg [1:0]ps,ns;
+always@(posedge clk)
+if(rst)
+ ps<=IDLE;
+else
+ ps<=ns;
+always@(data_in)
+begin
+ case(ps)
+ IDLE : begin
+ if(data_in)
+ ns<=s1;
+ else
+ ns=IDLE;
+ end
+ s1: begin
+ if(!data_in)
+ ns<=s2;
+ else
+ ns<=s1;
+ end
+ s2: begin
+ if(data_in)
+ ns<=s3;
+ else
+ ns<=IDLE;
+ end
+ s3: begin
+ if(data_in)
+ ns<=s1;
+ else
+ ns<=s2;
+ end
+ default :ns<=IDLE;
+ endcase
+end
+assign data_out=(ps==s3)? 1'b1:1'b0;
+endmodule
