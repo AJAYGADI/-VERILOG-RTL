@@ -1,0 +1,33 @@
+module ram_asyn(wr_clk,rd_clk,clr,we,re,wr_addr,rd_addr,data_in,data_out);
+input wr_clk,rd_clk,clr,we,re;
+input [2:0]wr_addr,rd_addr;
+input [15:0]data_in;
+output reg[15:0]data_out;
+reg [15:0]ram[7:0];
+integer i;
+always@(posedge wr_clk or posedge clr)
+begin
+if(clr)
+begin
+for(i=0;i<8;i=i+1)
+begin
+ram[i]<=0;
+end
+end
+else
+begin
+if(we)
+ram[wr_addr]<=data_in;
+end
+end
+always@(posedge rd_clk or posedge clr)
+begin
+if(clr)
+data_out<=0;
+else
+begin
+if(re)
+data_out=ram[rd_addr];
+end
+end
+endmodule
