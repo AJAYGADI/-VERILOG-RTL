@@ -1,0 +1,21 @@
+module full_adder(input a,b,c,output sum,carry);
+assign sum = (a^b^c);
+assign carry = ((a & b)|(b& c)|(c&a));
+endmodule
+////// RCA module///////
+module ripplegentop(input [31:0]a,b,
+input cin,
+output [31:0]sum,
+output carry);
+
+wire [31:0]c;
+genvar i;
+generate
+for(i=0;i<32;i=i+1)
+begin :CC1
+full_adder FA1(a[i],b[i],c[i],sum[i],c[i+1]);
+end
+endgenerate
+assign c[0] = cin;
+assign carry = c[31];
+endmodule
