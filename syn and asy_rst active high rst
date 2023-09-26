@@ -1,0 +1,28 @@
+module ResetExample (
+    input wire clk,
+    input wire async_reset,
+    input wire sync_reset,
+    output reg data
+);
+
+    // Asynchronous Reset
+    always @(posedge clk or posedge async_reset) begin
+        if (async_reset) begin
+            data <= 0;  // Reset the data asynchronously
+        end else begin
+            // Your regular logic here
+            data <= data + 1;  // For example, increment the data on clock edge
+        end
+    end
+
+    // Synchronous Reset
+    always @(posedge clk) begin
+        if (sync_reset) begin
+            data <= 0;  // Reset the data synchronously
+        end else begin
+            // Your regular logic here
+            data <= data + 1;  // For example, increment the data on clock edge
+        end
+    end
+
+endmodule
