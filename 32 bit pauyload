@@ -1,0 +1,28 @@
+module PayloadGenerator (
+    input wire clk,
+    input wire start,
+    output wire [31:0] payload,
+    output wire done
+);
+
+    reg [31:0] count;
+    reg generating;
+
+    always @(posedge clk) begin
+        if (start) begin
+            count <= 32'd0;
+            generating <= 1'b1;
+        end else if (generating) begin
+            if (count < 32'd31) begin
+                count <= count + 32'd1;
+            end else begin
+                count <= 32'd0;
+                generating <= 1'b0;
+            end
+        end
+    end
+
+    assign payload = count;
+    assign done = (generating == 1'b0);
+
+endmodule
