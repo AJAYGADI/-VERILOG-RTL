@@ -1,0 +1,17 @@
+module ClockGenerator(
+    input wire clk_in,    // Input clock signal
+    output reg clk_out    // Output clock signal with 2.5 time period
+);
+
+reg [2:0] counter = 0;  // 3-bit counter for dividing the clock
+
+always @(posedge clk_in) begin
+    if (counter == 3'b100) begin // Divide input clock by 4 (2^2)
+        counter <= 0;
+        clk_out <= ~clk_out;     // Toggle the output clock
+    end else begin
+        counter <= counter + 1;  // Increment the counter
+    end
+end
+
+endmodule
