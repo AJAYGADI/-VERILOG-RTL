@@ -1,0 +1,17 @@
+module FrequencyDividerBy2(
+    input wire clk_in,    // Input clock signal
+    output wire clk_out   // Output divided-by-2 clock signal
+);
+
+task divide_by_2;
+    output = ~output;
+endtask
+
+reg output = 0;
+
+always @(posedge clk_in) begin
+    divide_by_2;
+    clk_out <= output;
+end
+
+endmodule
