@@ -1,0 +1,18 @@
+module SwapVariablesBlocking(
+    input wire a,
+    input wire b,
+    output wire swapped_a,
+    output wire swapped_b
+);
+
+    reg temp;
+
+    always @(*) begin
+        temp = a;
+        a = b;
+        b = temp;
+        swapped_a = a;
+        swapped_b = b;
+    end
+
+endmodule
