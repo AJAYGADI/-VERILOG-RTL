@@ -1,0 +1,20 @@
+module EdgeDetector(
+    input wire clk,       // Clock signal
+    input wire reset,     // Reset signal
+    input wire input_sig, // Input signal to detect edge
+    output wire edge_out  // Output signal indicating edge detection
+);
+
+reg prev_input;
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        prev_input <= 1'b0; // Reset the previous input
+    end else begin
+        prev_input <= input_sig; // Store the current input for comparison
+    end
+end
+
+assign edge_out = (input_sig && !prev_input); // Detect rising edge
+
+endmodule
