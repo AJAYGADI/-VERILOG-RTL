@@ -1,0 +1,26 @@
+module EvenOddGenerator(
+    input wire [31:0] limit,     // Limit for generating numbers
+    output reg [31:0] even_number, // Output even number
+    output reg [31:0] odd_number   // Output odd number
+);
+
+reg [31:0] counter = 0; // Counter for generating numbers
+
+always @(posedge clk) begin
+    if (counter <= limit) begin
+        if (counter % 2 == 0) begin
+            even_number <= counter;
+            odd_number <= counter + 1;
+        end else begin
+            even_number <= counter - 1;
+            odd_number <= counter;
+        end
+        counter <= counter + 2;
+    end else begin
+        even_number <= 0;
+        odd_number <= 0;
+        counter <= 0;
+    end
+end
+
+endmodule
